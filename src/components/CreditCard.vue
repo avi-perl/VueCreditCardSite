@@ -1,8 +1,8 @@
 <template>
   <div
     class="card cardFront"
-    :class="{ cardRedacted: card.redacted, cardSelected: card.selected }"
-    v-on:click="this.$root.selectCard(card)"
+    :class="{ cardRedacted: card.redacted, cardSelected: selected }"
+    @click="this.$emit('selectCard', this.card)"
   >
     <template v-if="card.redacted">
       <div class="cardNumber">**** **** **** ****</div>
@@ -23,7 +23,8 @@ export default {
   name: "CreditCard",
   props: {
     card: Object,
-  },
+    selected: Boolean,
+  }
 };
 </script>
 
@@ -48,7 +49,7 @@ export default {
 }
 
 .card:hover {
-  box-shadow: 0 10px 16px 0 rgb(0 0 0 / 40%), 0 6px 20px 0 rgb(0 0 0 / 29%);
+  box-shadow: 0 10px 16px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 19%);
 }
 
 .cardRedacted {

@@ -1,20 +1,31 @@
 <template>
-  <CreditCardList :cards="cards" :card_count="cardCount" />
-  <AddCreditCard msg="Welcome to Your Vue.js App Avi" />
+  <h3>You have {{ cardCount }} cards!</h3>
+  <div class="cards">
+    <CreditCard 
+      v-for="card in cards" 
+      :card="card"
+      :key="card.id"
+      :selected="card.id === selectedCardId"
+      @selectCard="selectCard"
+    />
+  </div>
+  <button @click="deleteCard" :disabled="selectedCardId === null">Delete Card</button>
+  <!-- <AddCreditCard msg="Welcome to Your Vue.js App Avi" /> -->
 </template>
 
 <script>
-import AddCreditCard from "./components/AddCreditCard.vue";
-import CreditCardList from "./components/CreditCardList.vue";
+// import AddCreditCard from "./components/AddCreditCard.vue";
+import CreditCard from "./components/CreditCard.vue";
 
 export default {
   name: "App",
   components: {
-    AddCreditCard,
-    CreditCardList,
+    // AddCreditCard,
+    CreditCard,
   },
   data: function () {
     return {
+      selectedCardId: null,
       cards: [
         {
           id: 1,
@@ -62,14 +73,15 @@ export default {
   },
   methods: {
     selectCard: function (card) {
-      this.cards.forEach(function (c) {
-        c.selected = false;
-      });
-      this.cards[card.id - 1].selected = true;
-      console.log(this.cards[card.id - 1]);
+      console.log("Selected card " + card.id);
+      this.selectedCardId = card.id;
     },
-    deleteCard: function (cardId) {
-      this.cards = this.cards.filter(card => card.id !== cardId);
+    deleteCard: function () {
+      const cardToDelete = this.cards.find(
+        (card) => card.id === this.selectedCardId
+      );
+      this.cards = this.cards.filter(card => card.id !== cardToDelete.id);
+      this.selectedCardId = null;
     },
     addCard: function (cardData) {
       let newCard = {
@@ -104,5 +116,11 @@ export default {
   font-family: OCRA;
   src: local("OCRA"),
     url("./assets/fonts/OCRA.ttf") format("truetype");
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>
