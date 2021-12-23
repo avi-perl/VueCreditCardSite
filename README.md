@@ -1,4 +1,8 @@
-# vue-training-1
+# Vue Credit Card Site
+
+My project to learn Vue and JavaScript. 
+
+Example: [avi-perl.github.io/VueCreditCardSite](https://avi-perl.github.io/VueCreditCardSite/)
 
 ## Project setup
 ```
